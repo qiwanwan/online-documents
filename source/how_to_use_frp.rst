@@ -61,4 +61,14 @@ frp 的工作原理如下图所示：
    webServer.user = "admin"
    webServer.password = "admin"
    
-    上述配置中，bind_port 是 frps 监听的端口，vhost_http_port 和 vhost_https_port 分别是 http 和 https 的虚拟主机端口，dashboard_port 是 frp 的管理界面端口，dashboard_user 和 dashboard_pwd 是管理界面的用户名和密码。
+3. 启动 frp
+
+    在 frp 目录下，使用以下命令启动 frps：
+    
+.. code-block:: sh
+   :caption: 启动 frps
+   :name: test555
+   :linenos:
+
+   #启动 frps
+   ./frps -c ./frps.toml
