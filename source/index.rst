@@ -41,7 +41,7 @@
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: 相关链接
 
    how_to_build_online_document
