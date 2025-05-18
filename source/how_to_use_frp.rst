@@ -125,6 +125,35 @@ frp 的工作原理如下图所示：
 客户端部署
 ----------------------------
 客户端必须有 **内网IP** 地址，且可以访问互联网。frp 的客户端称为 frpc。frpc 负责将内网服务的请求转发到公网服务。
+这里以树莓派4B为例，介绍如何在树莓派上部署 frp 客户端。
+
 1. 下载 frp
 
    在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
+
+.. code-block:: sh
+   :caption: 下载适用于树莓派4B的frp
+   :name: test333
+   :emphasize-lines: 2
+   :linenos:
+
+    #下载
+    wget https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_arm64.tar.gz
+    #解压
+    tar -zxvf frp_0.62.1_linux_arm64.tar.gz
+    #重命名解压后的文件夹为 frp
+    mv frp_0.62.1_linux_arm64 frp
+
+2. 配置 frp
+    进入 frp 目录，找到 frpc.toml 配置文件。
+
+.. code-block:: toml    
+   :caption: frpc.toml 配置文件
+   :name: test444
+   :linenos:
+
+   #服务器地址，公网IP
+   server_addr = "<公网IP>"
+   #服务器端口，默认7000
+   server_port = 7000
+   #本地服务地址，内网IP
