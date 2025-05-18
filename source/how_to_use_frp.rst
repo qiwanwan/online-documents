@@ -187,4 +187,52 @@ frp 的工作原理如下图所示：
 
    #启动 frpc
    ./frpc -c ./frpc.toml
-   
+
+4. 查看 frp 状态
+    启动成功后，可以在浏览器中访问 `http://<内网IP>:7300` 来查看 frp 的状态。默认的用户名和密码都是 admin。
+    如果需要修改用户名和密码，可以在 frpc.toml 中修改 webServer.user 和 webServer.password。
+    如果需要修改端口，可以在 frpc.toml 中修改 webServer.port。
+    如果需要修改地址，可以在 frpc.toml 中修改 webServer.addr。
+    如果需要修改其他配置，可以在 frpc.toml 中修改其他配置。
+
+5. 开机自启
+    如果需要开机自启，可以将 frpc 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
+    这里以 Linux 系统为例，使用以下命令添加开机启动项：
+.. code-block:: sh
+   :caption: frpc.service
+   :name: test666
+   :linenos:
+
+    #进入系统配置目录
+    cd /etc/systemd/system/
+    #创建 frpc.service 文件
+    sudo nano frpc.service
+    
+    #添加以下内容
+    [Unit]
+    # 服务名称，可自定义
+    Description = frp client
+    After = network.target syslog.target
+    Wants = network.target
+
+    [Service]
+    Type = simple
+    User=nobody
+    Restart=on-failure
+    RestartSec=5s
+    # 启动frpc的命令，需修改为您的frpc的安装路径
+    ExecStart = /root/frp/frpc -c /root/frp/frpc.toml
+
+    [Install]
+    WantedBy = multi-user.target
+    #保存并退出
+    #启动服务
+    sudo systemctl start frpc
+    #设置开机自启
+    sudo systemctl enable frpc
+    #查看服务状态
+    sudo systemctl status frpc
+    #停止服务
+    sudo systemctl stop frpc
+    #重启服务
+    sudo systemctl restart frpc   
