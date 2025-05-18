@@ -23,9 +23,8 @@ frp 的工作原理如下图所示：
 服务器必须有 **公网IP** 地址，且可以访问互联网。frp 的服务器端称为 frps，客户端称为 frpc。frps 负责接收来自 frpc 的请求，并将请求转发到内网服务。
 
 1. 下载 frp
-
-   在服务器上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
-   这里以 Linux 系统为例，使用以下命令下载和解压缩 frp：
+    在服务器上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
+    这里以 Linux 系统为例，使用以下命令下载和解压缩 frp：
 
 .. code-block:: sh
    :caption: 下载 frp，Linux 系统
@@ -42,7 +41,6 @@ frp 的工作原理如下图所示：
 
    
 2. 配置 frp
-
     进入 frp 目录，找到 frps.toml 配置文件。
 
 .. code-block:: toml
@@ -61,7 +59,6 @@ frp 的工作原理如下图所示：
    webServer.password = "admin"
    
 3. 启动 frp
-
     在 frp 目录下，使用以下命令启动 frps：
 
 .. code-block:: sh
@@ -73,7 +70,6 @@ frp 的工作原理如下图所示：
    ./frps -c ./frps.toml
 
 4. 查看 frp 状态
-
     启动成功后，可以在浏览器中访问 `http://<公网IP>:7500` 来查看 frp 的状态。默认的用户名和密码都是 admin。
     如果需要修改用户名和密码，可以在 frps.toml 中修改 webServer.user 和 webServer.password。
     如果需要修改端口，可以在 frps.toml 中修改 webServer.port。
@@ -81,7 +77,6 @@ frp 的工作原理如下图所示：
     如果需要修改其他配置，可以在 frps.toml 中修改其他配置。
 
 5. 开机自启
-
     如果需要开机自启，可以将 frps 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
     这里以 Linux 系统为例，使用以下命令添加开机启动项：
 
@@ -128,8 +123,7 @@ frp 的工作原理如下图所示：
 这里以树莓派4B为例，介绍如何在树莓派上部署 frp 客户端。
 
 1. 下载 frp
-
-   在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
+    在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
 
 .. code-block:: sh
    :caption: 下载适用于树莓派4B的frp
