@@ -12,11 +12,11 @@ frp 的工作原理
 frp 的工作原理是通过在内网和公网之间建立一个长连接，将内网服务的请求转发到公网。具体来说，frp 在内网和公网各部署一个 frp 实例，内网实例负责将内网服务的请求转发到公网实例，公网实例负责将外部请求转发到内网实例。这样就实现了内网穿透。
 frp 的工作原理如下图所示：
 
-.. image::
+.. image:: ../_static/frp_workflow.png
     :width: 600px
     :height: 400px
     :align: center
     :alt: frp 工作原理
     :scale: 100%
-    :target: _static/frp_workflow.png
+    
     
