@@ -111,3 +111,20 @@ frp 的工作原理如下图所示：
     [Install]
     WantedBy = multi-user.target
     #保存并退出
+    #启动服务
+    sudo systemctl start frps
+    #设置开机自启
+    sudo systemctl enable frps
+    #查看服务状态
+    sudo systemctl status frps
+    #停止服务
+    sudo systemctl stop frps
+    #重启服务
+    sudo systemctl restart frps
+    
+客户端部署
+----------------------------
+客户端必须有 **内网IP** 地址，且可以访问互联网。frp 的客户端称为 frpc。frpc 负责将内网服务的请求转发到公网服务。
+1. 下载 frp
+
+   在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
