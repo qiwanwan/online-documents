@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内网穿透frp &mdash; 个人知识库 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f115507d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=beaddf03"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="prev" title="如何搭建在线文档" href="how_to_build_online_document.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            个人知识库
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">相关链接</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_build_online_document.html">如何搭建在线文档</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">内网穿透frp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">frp 的工作原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">服务器端部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">客户端部署</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">个人知识库</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">内网穿透frp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/how_to_use_frp.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="frp">
+<h1>内网穿透frp<a class="headerlink" href="#frp" title="Link to this heading"></a></h1>
+<p>内网穿透是指在内网环境中，将内网服务暴露到公网上的技术。它可以让外部用户访问内网中的服务，而不需要进行复杂的网络配置。内网穿透通常用于远程访问、远程控制、远程调试等场景。
+frp 是一个高性能的反向代理应用，专注于内网穿透。它可以将内网服务暴露到公网上，方便外部访问。frp 的使用非常简单，只需要在内网和公网各部署一个 frp 实例即可。</p>
+<section id="id1">
+<h2>frp 的工作原理<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>frp 的工作原理是通过在内网和公网之间建立一个长连接，将内网服务的请求转发到公网。具体来说，frp 在内网和公网各部署一个 frp 实例，内网实例负责将内网服务的请求转发到公网实例，公网实例负责将外部请求转发到内网实例。这样就实现了内网穿透。
+frp 的工作原理如下图所示：</p>
+<a class="reference internal image-reference" href="_images/frp_workflow.png"><img alt="frp 工作原理" class="align-center" src="_images/frp_workflow.png" style="width: 600.0px; height: 400.0px;" />
+</a>
+</section>
+<section id="id2">
+<h2>服务器端部署<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>服务器必须有 <strong>公网IP</strong> 地址，且可以访问互联网。frp 的服务器端称为 frps，客户端称为 frpc。frps 负责接收来自 frpc 的请求，并将请求转发到内网服务。</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>下载 frp</dt><dd><p>在服务器上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](<a class="reference external" href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a>) 上找到最新版本的下载链接。下载完成后，解压缩文件。
+这里以 Linux 系统为例，使用以下命令下载和解压缩 frp：</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="test333">
+<div class="code-block-caption"><span class="caption-text">下载 frp，Linux 系统</span><a class="headerlink" href="#test333" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1">#下载</span>
+<span class="hll"><span class="linenos">2</span>wget<span class="w"> </span>https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_amd64.tar.gz
+</span><span class="linenos">3</span><span class="c1">#解压</span>
+<span class="linenos">4</span>tar<span class="w"> </span>-zxvf<span class="w"> </span>frp_0.62.1_linux_amd64.tar.gz
+<span class="linenos">5</span><span class="c1">#重命名解压后的文件夹为 frp</span>
+<span class="linenos">6</span>mv<span class="w"> </span>frp_0.62.1_linux_amd64<span class="w"> </span>frp
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><dl class="simple">
+<dt>配置 frp</dt><dd><p>进入 frp 目录，找到 frps.toml 配置文件。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="test444">
+<div class="code-block-caption"><span class="caption-text">frps.toml 配置文件</span><a class="headerlink" href="#test444" title="Link to this code"></a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1">#客户端连接端口，默认7000</span>
+<span class="linenos">2</span><span class="n">bind_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7000</span>
+<span class="linenos">3</span><span class="c1">#web界面网址，默认为 127.0.0.1，如果需要公网访问，需要修改为 0.0.0.0。</span>
+<span class="linenos">4</span><span class="n">webServer</span><span class="p">.</span><span class="n">addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span>
+<span class="linenos">5</span><span class="c1">#web界面端口，默认7500</span>
+<span class="linenos">6</span><span class="n">webServer</span><span class="p">.</span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7500</span>
+<span class="linenos">7</span><span class="c1">#web界面用户名密码，可选，默认为空</span>
+<span class="linenos">8</span><span class="n">webServer</span><span class="p">.</span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="linenos">9</span><span class="n">webServer</span><span class="p">.</span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><dl class="simple">
+<dt>启动 frp</dt><dd><p>在 frp 目录下，使用以下命令启动 frps：</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="test555">
+<div class="code-block-caption"><span class="caption-text">启动 frps</span><a class="headerlink" href="#test555" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1">#启动 frps</span>
+<span class="linenos">2</span>./frps<span class="w"> </span>-c<span class="w"> </span>./frps.toml
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><dl class="simple">
+<dt>查看 frp 状态</dt><dd><p>启动成功后，可以在浏览器中访问 <cite>http://&lt;公网IP&gt;:7500</cite> 来查看 frp 的状态。默认的用户名和密码都是 admin。
+如果需要修改用户名和密码，可以在 frps.toml 中修改 webServer.user 和 webServer.password。
+如果需要修改端口，可以在 frps.toml 中修改 webServer.port。
+如果需要修改地址，可以在 frps.toml 中修改 webServer.addr。
+如果需要修改其他配置，可以在 frps.toml 中修改其他配置。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>开机自启</dt><dd><p>如果需要开机自启，可以将 frps 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
+这里以 Linux 系统为例，使用以下命令添加开机启动项：</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="test666">
+<div class="code-block-caption"><span class="caption-text">frps.service</span><a class="headerlink" href="#test666" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="w"> </span><span class="c1">#进入系统配置目录</span>
+<span class="linenos"> 2</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/etc/systemd/system/
+<span class="linenos"> 3</span><span class="w"> </span><span class="c1">#创建 frps.service 文件</span>
+<span class="linenos"> 4</span><span class="w"> </span>sudo<span class="w"> </span>nano<span class="w"> </span>frps.service
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="w"> </span><span class="c1">#添加以下内容</span>
+<span class="linenos"> 7</span><span class="w"> </span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="linenos"> 8</span><span class="w"> </span><span class="c1"># 服务名称，可自定义</span>
+<span class="linenos"> 9</span><span class="w"> </span><span class="nv">Description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>frp<span class="w"> </span>server
+<span class="linenos">10</span><span class="w"> </span><span class="nv">After</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>network.target<span class="w"> </span>syslog.target
+<span class="linenos">11</span><span class="w"> </span><span class="nv">Wants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>network.target
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="w"> </span><span class="o">[</span>Service<span class="o">]</span>
+<span class="linenos">14</span><span class="w"> </span><span class="nv">Type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>simple
+<span class="hll"><span class="linenos">15</span><span class="w"> </span><span class="nv">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>root<span class="w">      </span><span class="c1">#好多教程没有这一条，导致无法自启动</span>
+</span><span class="linenos">16</span><span class="w"> </span><span class="c1"># 启动frps的命令，需修改为您的frps的安装路径</span>
+<span class="linenos">17</span><span class="w"> </span><span class="nv">ExecStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/root/frp/frps<span class="w"> </span>-c<span class="w"> </span>/root/frp/frps.toml
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w"> </span><span class="o">[</span>Install<span class="o">]</span>
+<span class="linenos">20</span><span class="w"> </span><span class="nv">WantedBy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>multi-user.target
+<span class="linenos">21</span><span class="w"> </span><span class="c1">#保存并退出</span>
+<span class="linenos">22</span><span class="w"> </span><span class="c1">#启动服务</span>
+<span class="linenos">23</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>frps
+<span class="linenos">24</span><span class="w"> </span><span class="c1">#设置开机自启</span>
+<span class="linenos">25</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>frps
+<span class="linenos">26</span><span class="w"> </span><span class="c1">#查看服务状态</span>
+<span class="linenos">27</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>frps
+<span class="linenos">28</span><span class="w"> </span><span class="c1">#停止服务</span>
+<span class="linenos">29</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>frps
+<span class="linenos">30</span><span class="w"> </span><span class="c1">#重启服务</span>
+<span class="linenos">31</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>frps
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>客户端部署<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>客户端必须有 <strong>内网IP</strong> 地址，且可以访问互联网。frp 的客户端称为 frpc。frpc 负责将内网服务的请求转发到公网服务。
+这里以树莓派4B为例，介绍如何在树莓派上部署 frp 客户端。</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>下载 frp</dt><dd><p>在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](<a class="reference external" href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a>) 上找到最新版本的下载链接。下载完成后，解压缩文件。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">下载适用于树莓派4B的frp</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="w"> </span><span class="c1">#下载</span>
+<span class="hll"><span class="linenos">2</span><span class="w"> </span>wget<span class="w"> </span>https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_arm64.tar.gz
+</span><span class="linenos">3</span><span class="w"> </span><span class="c1">#解压</span>
+<span class="linenos">4</span><span class="w"> </span>tar<span class="w"> </span>-zxvf<span class="w"> </span>frp_0.62.1_linux_arm64.tar.gz
+<span class="linenos">5</span><span class="w"> </span><span class="c1">#重命名解压后的文件夹为 frp</span>
+<span class="linenos">6</span><span class="w"> </span>mv<span class="w"> </span>frp_0.62.1_linux_arm64<span class="w"> </span>frp
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><dl class="simple">
+<dt>配置 frp</dt><dd><p>进入 frp 目录，找到 frpc.toml 配置文件。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">frpc.toml 配置文件</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="w"> </span><span class="c1">#web界面网址，默认为127.0.0.1，如果需要公网访问，需要修改为0.0.0.0</span>
+<span class="linenos"> 2</span><span class="w"> </span><span class="n">webServer</span><span class="p">.</span><span class="n">addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span>
+<span class="linenos"> 3</span><span class="w"> </span><span class="n">webServer</span><span class="p">.</span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7300</span>
+<span class="linenos"> 4</span><span class="w"> </span><span class="n">webServer</span><span class="p">.</span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="linenos"> 5</span><span class="w"> </span><span class="n">webServer</span><span class="p">.</span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="w"> </span><span class="c1">#服务器地址</span>
+<span class="linenos"> 8</span><span class="w"> </span><span class="c1">#阿里云服务器公网IP</span>
+<span class="linenos"> 9</span><span class="w"> </span><span class="c1">#serverAddr = &quot;8.8.8.8&quot;</span>
+<span class="linenos">10</span><span class="w"> </span><span class="c1">#腾讯云服务器公网IP</span>
+<span class="linenos">11</span><span class="w"> </span><span class="n">serverAddr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;8.8.8.8&quot;</span>
+<span class="linenos">12</span><span class="w"> </span><span class="c1">#百度云服务器公网IP</span>
+<span class="linenos">13</span><span class="w"> </span><span class="c1">#serverAddr = &quot;8.8.8.8&quot;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="w"> </span><span class="c1">#服务器端口</span>
+<span class="linenos">16</span><span class="w"> </span><span class="n">serverPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7000</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w"> </span><span class="k">[[proxies]]</span>
+<span class="linenos">19</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SSH服务&quot;</span>
+<span class="linenos">20</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+<span class="linenos">21</span><span class="w"> </span><span class="n">localIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+<span class="linenos">22</span><span class="w"> </span><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">22</span>
+<span class="linenos">23</span><span class="w"> </span><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6022</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w"> </span><span class="k">[[proxies]]</span>
+<span class="linenos">26</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web服务&quot;</span>
+<span class="linenos">27</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+<span class="linenos">28</span><span class="w"> </span><span class="n">localIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+<span class="linenos">29</span><span class="w"> </span><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8080</span>
+<span class="linenos">30</span><span class="w"> </span><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10081</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="w"> </span><span class="c1"># frpc.toml</span>
+<span class="linenos">33</span><span class="w"> </span><span class="k">[[proxies]]</span>
+<span class="linenos">34</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;frp配置&quot;</span>
+<span class="linenos">35</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+<span class="linenos">36</span><span class="w"> </span><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7300</span>
+<span class="linenos">37</span><span class="w"> </span><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7300</span>
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><dl class="simple">
+<dt>启动 frp</dt><dd><p>在 frp 目录下，使用以下命令启动 frpc：</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">启动 frpc</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1">#启动 frpc</span>
+<span class="linenos">2</span>./frpc<span class="w"> </span>-c<span class="w"> </span>./frpc.toml
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><dl class="simple">
+<dt>查看 frp 状态</dt><dd><p>启动成功后，可以在浏览器中访问 <cite>http://&lt;内网IP&gt;:7300</cite> 来查看 frp 的状态。默认的用户名和密码都是 admin。
+如果需要修改用户名和密码，可以在 frpc.toml 中修改 webServer.user 和 webServer.password。
+如果需要修改端口，可以在 frpc.toml 中修改 webServer.port。
+如果需要修改地址，可以在 frpc.toml 中修改 webServer.addr。
+如果需要修改其他配置，可以在 frpc.toml 中修改其他配置。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>开机自启</dt><dd><p>如果需要开机自启，可以将 frpc 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
+这里以 Linux 系统为例，使用以下命令添加开机启动项：</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">frpc.service</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="w"> </span><span class="c1">#进入系统配置目录</span>
+<span class="linenos"> 2</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/etc/systemd/system/
+<span class="linenos"> 3</span><span class="w"> </span><span class="c1">#创建 frpc.service 文件</span>
+<span class="linenos"> 4</span><span class="w"> </span>sudo<span class="w"> </span>nano<span class="w"> </span>frpc.service
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="w"> </span><span class="c1">#添加以下内容</span>
+<span class="linenos"> 7</span><span class="w"> </span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="linenos"> 8</span><span class="w"> </span><span class="c1"># 服务名称，可自定义</span>
+<span class="linenos"> 9</span><span class="w"> </span><span class="nv">Description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>frp<span class="w"> </span>client
+<span class="linenos">10</span><span class="w"> </span><span class="nv">After</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>network.target<span class="w"> </span>syslog.target
+<span class="linenos">11</span><span class="w"> </span><span class="nv">Wants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>network.target
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="w"> </span><span class="o">[</span>Service<span class="o">]</span>
+<span class="linenos">14</span><span class="w"> </span><span class="nv">Type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>simple
+<span class="hll"><span class="linenos">15</span><span class="w"> </span><span class="nv">User</span><span class="o">=</span>nobody<span class="w"> </span><span class="c1">#好多教程没有这一条，导致无法自启动</span>
+</span><span class="hll"><span class="linenos">16</span><span class="w"> </span><span class="nv">Restart</span><span class="o">=</span>on-failure
+</span><span class="hll"><span class="linenos">17</span><span class="w"> </span><span class="nv">RestartSec</span><span class="o">=</span>5s
+</span><span class="linenos">18</span><span class="w"> </span><span class="c1"># 启动frpc的命令，需修改为您的frpc的安装路径</span>
+<span class="linenos">19</span><span class="w"> </span><span class="nv">ExecStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/home/pi/frp/frpc<span class="w"> </span>-c<span class="w"> </span>/home/pi/frp/frpc.toml
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w"> </span><span class="o">[</span>Install<span class="o">]</span>
+<span class="linenos">22</span><span class="w"> </span><span class="nv">WantedBy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>multi-user.target
+<span class="linenos">23</span><span class="w"> </span><span class="c1">#保存并退出</span>
+<span class="linenos">24</span><span class="w"> </span><span class="c1">#启动服务</span>
+<span class="linenos">25</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>frpc
+<span class="linenos">26</span><span class="w"> </span><span class="c1">#设置开机自启</span>
+<span class="linenos">27</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>frpc
+<span class="linenos">28</span><span class="w"> </span><span class="c1">#查看服务状态</span>
+<span class="linenos">29</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>frpc
+<span class="linenos">30</span><span class="w"> </span><span class="c1">#停止服务</span>
+<span class="linenos">31</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>frpc
+<span class="linenos">32</span><span class="w"> </span><span class="c1">#重启服务</span>
+<span class="linenos">33</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>frpc
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="how_to_build_online_document.html" class="btn btn-neutral float-left" title="如何搭建在线文档" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, 自由天风。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
