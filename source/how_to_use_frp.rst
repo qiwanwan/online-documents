@@ -25,7 +25,6 @@ frp 的工作原理如下图所示：
 1. 下载 frp
     在服务器上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
     这里以 Linux 系统为例，使用以下命令下载和解压缩 frp：
-
 .. code-block:: sh
    :caption: 下载 frp，Linux 系统
    :name: test333
@@ -42,7 +41,6 @@ frp 的工作原理如下图所示：
    
 2. 配置 frp
     进入 frp 目录，找到 frps.toml 配置文件。
-
 .. code-block:: toml
    :caption: frps.toml 配置文件
    :name: test444
@@ -60,7 +58,6 @@ frp 的工作原理如下图所示：
    
 3. 启动 frp
     在 frp 目录下，使用以下命令启动 frps：
-
 .. code-block:: sh
    :caption: 启动 frps
    :name: test555
@@ -79,7 +76,6 @@ frp 的工作原理如下图所示：
 5. 开机自启
     如果需要开机自启，可以将 frps 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
     这里以 Linux 系统为例，使用以下命令添加开机启动项：
-
 .. code-block:: sh
    :caption: frps.service
    :name: test666
@@ -124,7 +120,6 @@ frp 的工作原理如下图所示：
 
 1. 下载 frp
     在客户端上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
-
 .. code-block:: sh
    :caption: 下载适用于树莓派4B的frp
    :name: test333
@@ -140,7 +135,6 @@ frp 的工作原理如下图所示：
 
 2. 配置 frp
     进入 frp 目录，找到 frpc.toml 配置文件。
-
 .. code-block:: toml    
    :caption: frpc.toml 配置文件
    :name: test444
