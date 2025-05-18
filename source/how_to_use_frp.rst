@@ -21,11 +21,13 @@ frp 的工作原理如下图所示：
 ----------------------------
 1. 下载 frp
    在服务器上下载 frp 的最新版本，可以在 [frp 的 GitHub 页面](https://github.com/fatedier/frp/releases) 上找到最新版本的下载链接。下载完成后，解压缩文件。
+   
    这里以 Linux 系统为例，使用以下命令下载和解压缩 frp：
+   
    ```bash
    wget https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_amd64.tar.gz
-    tar -zxvf frp_0.62.1_linux_amd64.tar.gz
-    mv frp_0.62.1_linux_amd64 frp
-    
+   tar -zxvf frp_0.62.1_linux_amd64.tar.gz
+   mv frp_0.62.1_linux_amd64 frp
+
    
 2. 配置 frp
