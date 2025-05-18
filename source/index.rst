@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-个人知识库_v1.0
+个人知识库
 ========================
 
 火山引擎2核2G1M带宽。29元/年。2026-6-5到期。
