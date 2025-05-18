@@ -79,6 +79,7 @@ frp 的工作原理如下图所示：
 .. code-block:: sh
    :caption: frps.service
    :name: test666
+   :emphasize-lines: 15
    :linenos:
 
     #进入系统配置目录
@@ -95,7 +96,7 @@ frp 的工作原理如下图所示：
 
     [Service]
     Type = simple
-    User = root
+    User = root      #好多教程没有这一条，导致无法自启动
     # 启动frps的命令，需修改为您的frps的安装路径
     ExecStart = /root/frp/frps -c /root/frp/frps.toml
 
@@ -201,6 +202,7 @@ frp 的工作原理如下图所示：
 .. code-block:: sh
    :caption: frpc.service
    :name: test666
+   :emphasize-lines: 15,16,17
    :linenos:
 
     #进入系统配置目录
@@ -217,11 +219,11 @@ frp 的工作原理如下图所示：
 
     [Service]
     Type = simple
-    User=nobody
-    Restart=on-failure
+    User=nobody #好多教程没有这一条，导致无法自启动
+    Restart=on-failure  
     RestartSec=5s
     # 启动frpc的命令，需修改为您的frpc的安装路径
-    ExecStart = /root/frp/frpc -c /root/frp/frpc.toml
+    ExecStart = /home/pi/frp/frpc -c /home/pi/frp/frpc.toml
 
     [Install]
     WantedBy = multi-user.target
