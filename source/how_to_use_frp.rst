@@ -43,8 +43,7 @@ frp 的工作原理如下图所示：
    
 2. 配置 frp
 
-    进入 frp 目录，找到 frps.toml 文件。该文件是 frp 的配置文件，包含了 frp 的基本配置和服务端口的设置。可以使用文本编辑器打开该文件进行编辑。
-    下面是一个简单的 frps.toml 配置文件示例：
+    进入 frp 目录，找到 frps.toml 配置文件。
 
 .. code-block:: toml
    :caption: frps.toml 配置文件
@@ -64,7 +63,7 @@ frp 的工作原理如下图所示：
 3. 启动 frp
 
     在 frp 目录下，使用以下命令启动 frps：
-    
+
 .. code-block:: sh
    :caption: 启动 frps
    :name: test555
@@ -72,3 +71,43 @@ frp 的工作原理如下图所示：
 
    #启动 frps
    ./frps -c ./frps.toml
+
+4. 查看 frp 状态
+
+    启动成功后，可以在浏览器中访问 `http://<公网IP>:7500` 来查看 frp 的状态。默认的用户名和密码都是 admin。
+    如果需要修改用户名和密码，可以在 frps.toml 中修改 webServer.user 和 webServer.password。
+    如果需要修改端口，可以在 frps.toml 中修改 webServer.port。
+    如果需要修改地址，可以在 frps.toml 中修改 webServer.addr。
+    如果需要修改其他配置，可以在 frps.toml 中修改其他配置。
+
+5. 开机自启
+
+    如果需要开机自启，可以将 frps 的启动命令添加到系统的开机启动项中。具体方法可以参考系统的相关文档。
+    这里以 Linux 系统为例，使用以下命令添加开机启动项：
+
+.. code-block:: sh
+   :caption: frps.service
+   :name: test666
+   :linenos:
+
+    #进入系统配置目录
+    cd /etc/systemd/system/
+    #创建 frps.service 文件
+    sudo nano frps.service
+    
+    #添加以下内容
+    [Unit]
+    # 服务名称，可自定义
+    Description = frp server
+    After = network.target syslog.target
+    Wants = network.target
+
+    [Service]
+    Type = simple
+    User = root
+    # 启动frps的命令，需修改为您的frps的安装路径
+    ExecStart = /root/frp/frps -c /root/frp/frps.toml
+
+    [Install]
+    WantedBy = multi-user.target
+    #保存并退出
