@@ -42,7 +42,8 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 如何搭建在线文档
+   :caption: 相关链接
 
    how_to_build_online_document
+   how_to_use_frp
 
