@@ -13,7 +13,9 @@ build:
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
    configuration: source/conf.py
-
+sphinx
+sphinx_rtd_theme
+sphinx-intl
 # Optionally, but recommended,
 # declare the Python requirements required to build your documentation
 # See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
