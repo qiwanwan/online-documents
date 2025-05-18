@@ -146,8 +146,51 @@ frp 的工作原理如下图所示：
    :name: test444
    :linenos:
 
-   #服务器地址，公网IP
-   server_addr = "<公网IP>"
-   #服务器端口，默认7000
-   server_port = 7000
-   #本地服务地址，内网IP
+    #web界面网址，默认为127.0.0.1，如果需要公网访问，需要修改为0.0.0.0
+    webServer.addr = "0.0.0.0"
+    webServer.port = 7300
+    webServer.user = "admin"
+    webServer.password = "admin"
+
+    #服务器地址
+    #阿里云服务器公网IP
+    #serverAddr = "8.8.8.8"
+    #腾讯云服务器公网IP
+    serverAddr = "8.8.8.8"
+    #百度云服务器公网IP
+    #serverAddr = "8.8.8.8"
+    
+    #服务器端口
+    serverPort = 7000
+
+    [[proxies]]
+    name = "SSH服务"
+    type = "tcp"
+    localIP = "127.0.0.1"
+    localPort = 22
+    remotePort = 6022
+
+    [[proxies]]
+    name = "web服务"
+    type = "tcp"
+    localIP = "127.0.0.1"
+    localPort = 8080
+    remotePort = 10081
+
+    # frpc.toml
+    [[proxies]]
+    name = "frp配置"
+    type = "tcp"
+    localPort = 7300
+    remotePort = 7300
+
+3. 启动 frp
+    在 frp 目录下，使用以下命令启动 frpc：
+.. code-block:: sh
+   :caption: 启动 frpc
+   :name: test555
+   :linenos:
+
+   #启动 frpc
+   ./frpc -c ./frpc.toml
+   
