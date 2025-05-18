@@ -29,9 +29,11 @@ frp 的工作原理如下图所示：
    :name: test333
    :emphasize-lines: 2
    :linenos:
-   
+   #下载
    wget https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_amd64.tar.gz
+   #解压
    tar -zxvf frp_0.62.1_linux_amd64.tar.gz
+   #重命名解压后的文件夹为 frp
    mv frp_0.62.1_linux_amd64 frp
 
    
