@@ -11,6 +11,9 @@ build:
     python: "3.13"
 
 # Build documentation in the "docs/" directory with Sphinx
+sphinx
+sphinx_rtd_theme
+sphinx-intl
 sphinx:
    configuration: source/conf.py
 #sphinx
