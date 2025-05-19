@@ -80,12 +80,12 @@
 <p>使用 PlatformIO 通过 Arduino 框架对 ESP-01S 进行编程时，程序无法运行！！怎么办？？？配置文件最后 <strong>添加一下两条高亮语句</strong></p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">platformio.ini</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">[env:esp01_1m]</span>
-<span class="w"> </span><span class="na">platform</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">espressif8266</span>
-<span class="w"> </span><span class="na">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">esp01_1m</span>
-<span class="w"> </span><span class="na">framework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">arduino</span>
-<span class="hll"><span class="w"> </span><span class="na">board_upload.resetmethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nodemcu</span>
-</span><span class="hll"><span class="w"> </span><span class="na">board_build.flash_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dout</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="w"> </span><span class="k">[env:esp01_1m]</span>
+<span class="linenos">2</span><span class="w"> </span><span class="na">platform</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">espressif8266</span>
+<span class="linenos">3</span><span class="w"> </span><span class="na">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">esp01_1m</span>
+<span class="linenos">4</span><span class="w"> </span><span class="na">framework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">arduino</span>
+<span class="hll"><span class="linenos">5</span><span class="w"> </span><span class="na">board_upload.resetmethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">nodemcu</span>
+</span><span class="hll"><span class="linenos">6</span><span class="w"> </span><span class="na">board_build.flash_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dout</span>
 </span></pre></div>
 </div>
 </div>

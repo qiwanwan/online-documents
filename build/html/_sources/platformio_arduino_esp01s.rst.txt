@@ -6,6 +6,7 @@ PlatformIO 对 ESP-01S 编程注意事项
 .. code-block:: ini
    :caption: platformio.ini
    :emphasize-lines: 5,6
+   :linenos:
 
     [env:esp01_1m]
     platform = espressif8266
