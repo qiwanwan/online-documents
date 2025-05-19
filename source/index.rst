@@ -43,6 +43,7 @@
    :maxdepth: 1
    :caption: 相关链接
 
-   how_to_build_online_document
+   updatelog
    how_to_use_frp
+   how_to_build_online_document
 
